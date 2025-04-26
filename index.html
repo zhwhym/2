@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中哈网络文化研习社</title>
+    <style>
+        /* 基础样式 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        /* 白色导航栏 - 科技专版 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #4285f4; /* 科技主题色 */
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #4285f4; /* 科技主题色 */
+        }
+        
+        /* 科技导航菜单 */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 2rem;
+        }
+        
+        nav a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #4285f4; /* 科技主题色 */
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #4285f4; /* 科技主题色 */
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* 当前页面高亮 */
+        nav a[href="#tech"] {
+            color: #4285f4;
+            font-weight: 600;
+        }
+        
+        nav a[href="#tech"]:after {
+            width: 100%;
+        }
+        
+        /* 主要内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .page-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: normal;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        /* 科技新闻卡片 */
+        .tech-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #4285f4; /* 科技主题色 */
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tech-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .tech-content {
+            padding: 1.5rem;
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            background: #e8f0fe; /* 浅蓝色背景 */
+            color: #4285f4;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .tech-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #222;
+            line-height: 1.4;
+        }
+        
+        .tech-summary {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .tech-meta {
+            display: flex;
+            align-items: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tech-date {
+            margin-right: 1rem;
+            color: #ea4335;
+            font-weight: 500;
+        }
+        
+        .tech-source {
+            font-style: italic;
+        }
+        
+        .innovation-level {
+            display: inline-flex;
+            align-items: center;
+            margin-left: auto;
+            font-weight: 500;
+        }
+        
+        .high {
+            color: #ea4335; /* 高创新 */
+        }
+        
+        .medium {
+            color: #fbbc05; /* 中创新 */
+        }
+        
+        .low {
+            color: #34a853; /* 低创新 */
+        }
+        
+        /* 技术参数样式 */
+        .tech-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .spec-item {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .spec-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .spec-value {
+            font-weight: bold;
+            color: #222;
+            margin-top: 0.3rem;
+        }
+        
+        /* 新闻网格布局 */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        /* 侧边栏 - 科技动态 */
+        .sidebar {
+            margin-top: 2rem;
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: #222;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #4285f4;
+            display: inline-block;
+        }
+        
+        .tech-updates {
+            list-style: none;
+        }
+        
+        .tech-updates li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .update-title {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        
+        .update-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.8rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .footer-section h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #4285f4;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav li {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-section {
+                flex: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 白色导航栏 -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">中哈<span>文化云脉</span></a>
+            <nav>
+                <ul>
+                    <li><a href="https://zhwhym.github.io/1//">首页</a></li>
+                    <li><a href="https://zhwhym.github.io/2//">走近哈萨克斯坦</a></li>
+                    <li><a href="https://zhwhym.github.io/3//">相关资料</a></li>
+                    <li><a href="https://zhwhym.github.io/4//">公众号</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="container">
+        <div class="page-header">
+            <h1 class="page-title">走近哈萨克斯坦</h1>
+            <p class="page-subtitle">了解哈萨克斯坦,走近哈萨克斯坦<li></p>
+        </div>
+        
+        <!-- 头条新闻 -->
+        <article class="tech-card">     
+            <div class="tech-content">
+                <span class="tech-tag">地理与环境</span>
+                <h2 class="tech-title">哈萨克斯坦的地理环境与自然资源</h2>
+                <p class="tech-summary">哈萨克斯坦地处亚欧大陆腹地，是全球面积最大的内陆国家（约272.5万平方公里），其地理环境以多样性著称，融合了草原、荒漠、高山、湖泊等丰富地貌。该国自然资源极为富集，被誉为“21世纪的资源宝库”。	</p>
+                <span class="tech-date">2025年4月12日</span>
+                <a href="https://zhwhym.github.io/text/" class="read-more">阅读全文 →</a>
+        
+            </div>
+        </article>
+        
+        <!-- 新闻网格 -->
+        <div class="tech-grid">
+            <article class="tech-card">
+                <div class="tech-content">
+                    <span class="tech-tag">历史文化</span>
+                    <h2 class="tech-title">哈萨克斯坦历史与文化综述：从草原文明到现代国家</h2>
+                    <p class="tech-summary">哈萨克斯坦的历史是一部游牧文明与农耕文明碰撞、东西方文化交融的史诗。其文化基因中既有马背民族的豪迈，也有丝绸之路的包容，更经历了沙俄殖民与苏联工业化的深刻塑造...</p>
+                    <div class="tech-meta">
+                        <span class="tech-date">2023年9月12日</span>
+                        <a href="https://zhwhym.github.io/text2/" class="read-more">阅读全文 →</a>
+                        <span class="innovation-level high">历史文化</span>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="tech-card">
+                <div class="tech-content">
+                    <span class="tech-tag">知识碎片</span>
+                    <h2 class="tech-title">哈萨克斯坦小知识</h2>
+                    <p class="tech-summary">世界最大内陆国：面积约272万平方公里（≈西欧总和），但人口仅约2000万，每平方公里不到7人。与俄罗斯、中国、乌兹别克斯坦等国接壤，是唯一一个同时与两个内陆海（里海、咸海）和太平洋（通过里海-伏尔加河运河间接连通）有联系的国家。</p>
+                    <p class="tech-summary">横跨欧亚两洲：乌拉尔河以西15%领土属于欧洲，阿特劳市立有欧亚分界线纪念碑。分界碑附近有“欧亚博物馆”，展示哈萨克斯坦东西方文化交融的历史。</p>
+                    <div class="tech-meta">
+                        <span class="tech-date">2025年4月23日</span>
+                        <a href="https://zhwhym.github.io/text3/" class="read-more">阅读全文 →</a>
+                        <span class="innovation-level medium">小知识</span>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="tech-card">
+                <div class="tech-content">
+                    <span class="tech-tag">旅游亮点</span>
+                    <h2 class="tech-title">哈萨克斯坦自然与旅游亮点：从荒野秘境到欧亚明珠</h2>
+                    <p class="tech-summary">哈萨克斯坦——这片横跨欧亚大陆的广袤土地，以原始壮美的自然景观和复杂多变的历史轨迹，编织出独特的旅游叙事。从咸海生态修复的全球样本到太空发射场的文明奇观，其旅游业正经历从资源开发到价值重塑的蜕变。</p>
+                    <div class="tech-meta">
+                        <span class="tech-date">2025年4月20日</span>
+                        <a href="https://zhwhym.github.io/text1/" class="read-more">阅读全文 →</a>
+                        <span class="innovation-level high">旅游攻略</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <!-- 侧边栏 - 科技动 -->
+        <div class="sidebar">
+            <h3 class="sidebar-title">最新动态</h3>
+            <ul class="tech-updates">
+                <li>
+                    <div class="update-title"> <a href="https://zhwhym.github.io/text1/" class="read-more">从荒野秘境到欧亚明珠 →</a></div>
+                    <div class="update-meta">
+                        <span>旅游亮点</span>
+                        <span>2025-04-20</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="update-title"> <a href="https://zhwhym.github.io/text3/" class="read-more">哈萨克斯坦小知识 →</a></div>
+                    <div class="update-meta">
+                        <span>知识碎片</span>
+                        <span>2025-04-23</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="update-title"> <a href="https://zhwhym.github.io/text3/" class="read-more">哈萨克斯坦历史与文化综述：从草原文明到现代国家→</a></div>
+                    <div class="update-meta">
+                        <span>历史文化</span>
+                        <span>2025-04-19</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="update-title"> <a href="https://zhwhym.github.io/text3/" class="read-more">哈萨克斯坦的地理环境与自然资源→</a></div>
+                    <div class="update-meta">
+                        <span>地理与环境</span>
+                        <span>2025-04-12</span>
+                    </div>
+                </li>
+               
+            </ul>
+        </div>
+    </main>
+
+     <!-- 页脚 -->
+     <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="#">联系我们</a></li>
+                    <li><a href="#">加入团队</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                
+                
+            </div>
+            <div class="footer-section">
+                <ul>
+                  
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <ul>
+                    <li><a href="">微信公众号：中哈文化研习社</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy;2025 中哈网络文化研习社</p>
+        </div>
+    </footer>
+</body>
+</html>
